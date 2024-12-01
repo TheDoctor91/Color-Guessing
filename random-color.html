@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Color Guessing Game</title>
+    <style>
+        h1 {
+            text-align: center;
+            background-image: linear-gradient(45deg, violet, indigo, blue, green, yellow, orange, red);
+            background-size: auto;
+        }
+        body {
+            text-align: center;
+        }
+        button {
+            background-color: rgb(172, 38, 143);
+            padding: 15px 32px;
+            border: none;
+            margin: 10px;
+            font-size: large;
+            color: white;
+        }
+    </style>
+</head>    
+<body>
+    <h1>Color Guessing Game</h1>
+    <button onclick="runGame()">Start Game</button>
+    <script>
+        const COLORS_ARRAY = ['blue', 'cyan', 'gold', 'gray', 'green', 'magenta', 'orange', 'red', 'white', 'yellow'];
+        COLORS_ARRAY = COLORS_ARRAY.sort();
+
+        function runGame() {
+            let guess = '';
+            let correct = false;
+            let numTries = 0;
+            const targetIndex = Math.floor(Math.random() * (COLORS_ARRAY.length - 1)) + 0;
+            const target = COLORS_ARRAY[targetIndex]; 
+            console.log(target);
+
+            do {
+                guess = prompt('I am thinking of one of these colors:\n\n' + COLORS_ARRAY.join(', ') +'\n\nWhat color am I thinking of?\n').toLocaleLowerCase();
+                guess.toLowerCase();
+                target.toLowerCase();
+                if (guess === null) {
+                    return;
+                }
+                numTries += 1;
+                correct = checkGuess(guess, target, numTries);
+            } while (!correct);
+            alert('You got it! the color was ' + target +' it took you ' + numTries +' to  guess correctly. Great job!');
+            document.body.style.background = guess;
+        }
+        function checkGuess(guess, target, numTries) {
+            let correct = false;
+            if (COLORS_ARRAY.indexOf(guess)<0) {
+                alert('You have not entered a listed color option\n\nPlease enter a color listed in the options above.');
+            } else if (guess > target) {
+                alert('You guessed too high!\n\nGame try count: ' + numTries +'.');
+            } else if (guess < target) {
+                alert('You guessed too low!\n\nGame try count: ' + numTries +'.');
+            } else {
+                correct = true;
+            }
+            return correct;
+        }
+    </script>
+</body>
+</html>     
